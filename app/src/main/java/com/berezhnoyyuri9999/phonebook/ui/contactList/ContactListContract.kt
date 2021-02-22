@@ -1,7 +1,6 @@
-package com.berezhnoyyuri9999.phonebook.ui.items
+package com.berezhnoyyuri9999.phonebook.ui.contactList
 
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
-import io.reactivex.Single
 
 interface ContactListContract {
 

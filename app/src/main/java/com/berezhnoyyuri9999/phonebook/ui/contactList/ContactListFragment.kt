@@ -1,12 +1,10 @@
-package com.berezhnoyyuri9999.phonebook.ui.items
+package com.berezhnoyyuri9999.phonebook.ui.contactList
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import com.berezhnoyyuri9999.phonebook.R
 import com.berezhnoyyuri9999.phonebook.adapter.ItemAdapter
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
@@ -20,10 +18,6 @@ class ContactListFragment : Fragment(), ContactListContract.ItemView {
     }
 
     private lateinit var mAdapter : ItemAdapter
-
-    private lateinit var mRecyclerView : RecyclerView
-
-    private lateinit var listNotes : AppNote
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,15 +42,18 @@ class ContactListFragment : Fragment(), ContactListContract.ItemView {
 
     }
 
-    @SuppressLint("CheckResult")
-    override fun showListPersons(list: List<AppNote>) {
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         mAdapter = ItemAdapter()
-        mRecyclerView = recyclerView
-        val rList = list.asReversed()
-        mAdapter.setData(rList)
+        recyclerView.adapter = mAdapter
+        mPresenter.showContactList()
+    }
 
 
+    override fun showListPersons(list: List<AppNote>) {
+        val listRevers = list.asReversed()
+
+        mAdapter.setData(listRevers)
     }
 
     override fun onStart() {

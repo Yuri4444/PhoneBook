@@ -1,12 +1,15 @@
-package com.berezhnoyyuri9999.phonebook.ui.items
+package com.berezhnoyyuri9999.phonebook.ui.contactList
 
+import android.annotation.SuppressLint
 import com.berezhnoyyuri9999.phonebook.R
-import com.berezhnoyyuri9999.phonebook.data.models.AppNote
 import com.berezhnoyyuri9999.phonebook.utils.APP_ACTIVITY
 import com.berezhnoyyuri9999.phonebook.utils.REPOSITORY
-import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class ContactListPresenter : ContactListContract.ItemPresenter {
+
+
 
     private var view : ContactListContract.ItemView? = null
 
@@ -31,7 +34,15 @@ class ContactListPresenter : ContactListContract.ItemPresenter {
         this.view = null
     }
 
-    override fun showContactList() {
+    @SuppressLint("CheckResult")
+    override fun showContactList()  {
         REPOSITORY.selectAllContacts()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                view?.showListPersons(it)
+            }, {
+
+            })
     }
 }
