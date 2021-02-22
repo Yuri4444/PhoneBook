@@ -29,6 +29,9 @@ class DatabaseRepository(private val appRoomDao: AppRoomDao) {
     fun delete(note: AppNote) : Observable<Unit> =
         Observable.fromCallable { appRoomDao.deleteNote(note) }
 
+    fun update(note : AppNote) : Observable<Unit> =
+        Observable.fromCallable { appRoomDao.updateNote(note) }
+
 
 
 

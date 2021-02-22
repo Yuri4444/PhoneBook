@@ -71,7 +71,9 @@ class ContactListFragment : Fragment(), ContactListContract.ItemView {
     companion object {
         fun clickItem(note : AppNote) {
             val bundle = Bundle()
+
             bundle.putSerializable("note", note)
+
             APP_ACTIVITY.navController.navigate(R.id.action_listFragment_to_noteFragment, bundle)
         }
     }

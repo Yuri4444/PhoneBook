@@ -6,7 +6,8 @@ import io.reactivex.internal.operators.single.SingleDoOnSuccess
 interface NoteContract {
 
     interface NoteView {
-        fun onContactDeleted()
+        fun onBackToListContact()
+//        fun saveChangedContact()
     }
 
     interface NotePresenter {
@@ -15,6 +16,10 @@ interface NoteContract {
         fun unBindView()
 
         fun delete(note : AppNote)
+
+        fun update(note : AppNote)
+
+
     }
 
 }

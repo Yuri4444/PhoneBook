@@ -1,8 +1,10 @@
 package com.berezhnoyyuri9999.phonebook.data.models
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
 
@@ -13,12 +15,12 @@ data class AppNote(
     var id : Int? = null,
 
     @ColumnInfo
-    val name : String = "",
+    var name : String = "",
 
     @ColumnInfo
-    val surname : String = "",
+    var surname : String = "",
 
     @ColumnInfo
-    val number : String = ""
+    var number : String = ""
 
 ) : Serializable

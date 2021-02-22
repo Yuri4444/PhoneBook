@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.ListFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.berezhnoyyuri9999.phonebook.R
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
 import com.berezhnoyyuri9999.phonebook.ui.contactList.ContactListFragment
 import com.berezhnoyyuri9999.phonebook.utils.showToast
+import kotlinx.android.synthetic.main.item_user.view.*
 
 class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
@@ -29,6 +31,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
         holder.nameNote.text = positionList.name
         holder.surnameNote.text = positionList.surname
         holder.numberNote.text = positionList.number
+
     }
 
     override fun getItemCount() = mListNotes.size
@@ -40,6 +43,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
 
     //Методы нажатия на item
+
     override fun onViewAttachedToWindow(holder: ViewHolder) {
         holder.itemView.setOnClickListener {
             ContactListFragment.clickItem(mListNotes[holder.adapterPosition])

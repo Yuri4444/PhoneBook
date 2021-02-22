@@ -10,7 +10,8 @@ import io.reactivex.schedulers.Schedulers
 
 class NotePresenter : NoteContract.NotePresenter {
 
-    private var view : NoteContract.NoteView? = null
+    private var view: NoteContract.NoteView? = null
+
 
     override fun bindView(view: NoteContract.NoteView) {
         this.view = view
@@ -21,7 +22,6 @@ class NotePresenter : NoteContract.NotePresenter {
     }
 
 
-
     @SuppressLint("CheckResult")
     override fun delete(note: AppNote) {
         REPOSITORY.delete(note)
@@ -29,7 +29,7 @@ class NotePresenter : NoteContract.NotePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
 
-                view?.onContactDeleted()
+                view?.onBackToListContact()
 
                 Log.e("Delete", "$it")
                 showToast("Контакт удален")
@@ -37,4 +37,21 @@ class NotePresenter : NoteContract.NotePresenter {
 
             })
     }
+
+    @SuppressLint("CheckResult")
+    override fun update(note: AppNote) {
+        REPOSITORY.update(note)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+//                view?.saveChangedContact()
+                view?.onBackToListContact()
+                showToast("Контакт изменен")
+
+            }, {
+
+            })
+    }
+
+
 }

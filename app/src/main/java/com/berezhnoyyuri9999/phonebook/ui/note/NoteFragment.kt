@@ -1,12 +1,18 @@
 package com.berezhnoyyuri9999.phonebook.ui.note
 
 import android.os.Bundle
+import android.text.Editable
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavArgs
+import androidx.navigation.NavHost
+import androidx.navigation.fragment.navArgs
 import com.berezhnoyyuri9999.phonebook.R
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
 import com.berezhnoyyuri9999.phonebook.utils.APP_ACTIVITY
+import kotlinx.android.synthetic.main.fragment_add_person.*
 import kotlinx.android.synthetic.main.fragment_note.*
+import kotlinx.android.synthetic.main.fragment_note.view.*
 
 class NoteFragment : Fragment(), NoteContract.NoteView {
 
@@ -20,10 +26,10 @@ class NoteFragment : Fragment(), NoteContract.NoteView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        val view = inflater.inflate(R.layout.fragment_note, container, false)
         mCurrentNote = arguments?.getSerializable("note") as AppNote
 
-        return inflater.inflate(R.layout.fragment_note, container, false)
+        return view
     }
 
     override fun onStart() {
@@ -31,6 +37,11 @@ class NoteFragment : Fragment(), NoteContract.NoteView {
         mPresenter.bindView(this)
 
         initialized()
+
+        btn_change_item.setOnClickListener {
+
+            onBackToListContact()
+        }
 
     }
 
@@ -41,9 +52,10 @@ class NoteFragment : Fragment(), NoteContract.NoteView {
 
     private fun initialized() {
         setHasOptionsMenu(true)
-//        ed_name_change.text = mCurrentNote.name
-//        ed_surname_change.text = mCurrentNote.surname
-//        ed_phone_number_change.text = mCurrentNote.number
+        ed_name_change.setText(mCurrentNote.name)
+        ed_surname_change.setText(mCurrentNote.surname)
+        ed_phone_number_change.setText(mCurrentNote.number)
+
     }
 
 
@@ -62,8 +74,19 @@ class NoteFragment : Fragment(), NoteContract.NoteView {
 
     }
 
-    override fun onContactDeleted() {
+    override fun onBackToListContact() {
+
+
+        mCurrentNote.name = ed_name_change.text.toString()
+        mCurrentNote.surname = ed_surname_change.text.toString()
+        mCurrentNote.number = ed_phone_number_change.text.toString()
+
+        mPresenter.update(mCurrentNote)
+
         APP_ACTIVITY.navController.navigate(R.id.action_noteFragment_to_listFragment)
     }
+
+
+
 
 }
