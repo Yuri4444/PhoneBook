@@ -1,18 +1,12 @@
 package com.berezhnoyyuri9999.phonebook.ui.note
 
 import android.os.Bundle
-import android.text.Editable
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavArgs
-import androidx.navigation.NavHost
-import androidx.navigation.fragment.navArgs
 import com.berezhnoyyuri9999.phonebook.R
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
 import com.berezhnoyyuri9999.phonebook.utils.APP_ACTIVITY
-import kotlinx.android.synthetic.main.fragment_add_person.*
 import kotlinx.android.synthetic.main.fragment_note.*
-import kotlinx.android.synthetic.main.fragment_note.view.*
 
 class NoteFragment : Fragment(), NoteContract.NoteView {
 
@@ -36,11 +30,11 @@ class NoteFragment : Fragment(), NoteContract.NoteView {
         super.onStart()
         mPresenter.bindView(this)
 
-        initialized()
+        dataFromContactList()
 
         btn_change_item.setOnClickListener {
 
-            onBackToListContact()
+            changeData()
         }
 
     }
@@ -50,7 +44,8 @@ class NoteFragment : Fragment(), NoteContract.NoteView {
         mPresenter.unBindView()
     }
 
-    private fun initialized() {
+    private fun dataFromContactList() {
+
         setHasOptionsMenu(true)
         ed_name_change.setText(mCurrentNote.name)
         ed_surname_change.setText(mCurrentNote.surname)
@@ -74,19 +69,18 @@ class NoteFragment : Fragment(), NoteContract.NoteView {
 
     }
 
-    override fun onBackToListContact() {
-
-
+    private fun changeData() {
         mCurrentNote.name = ed_name_change.text.toString()
         mCurrentNote.surname = ed_surname_change.text.toString()
         mCurrentNote.number = ed_phone_number_change.text.toString()
 
         mPresenter.update(mCurrentNote)
-
-        APP_ACTIVITY.navController.navigate(R.id.action_noteFragment_to_listFragment)
     }
 
+    override fun onBackToListContact() {
 
+        APP_ACTIVITY.navController.navigate(R.id.action_noteFragment_to_listFragment)
 
+    }
 
 }

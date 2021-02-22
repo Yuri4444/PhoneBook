@@ -12,7 +12,7 @@ interface AddContract {
 
         fun bindView(view : AddView)
         fun unBind()
-        fun saveAllDataFromEditText()
+
 
         fun insertToDb(note : AppNote)
     }

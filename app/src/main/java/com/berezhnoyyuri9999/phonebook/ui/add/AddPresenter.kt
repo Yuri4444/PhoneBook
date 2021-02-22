@@ -25,11 +25,6 @@ class AddPresenter() : AddContract.AddPresenter {
         this.view = null
     }
 
-    override fun saveAllDataFromEditText() {
-//        roomApplication.database.getAppRoomDao().getAllNotes()
-
-    }
-
     @SuppressLint("CheckResult")
     override fun insertToDb(note: AppNote) {
         REPOSITORY.insert(note)

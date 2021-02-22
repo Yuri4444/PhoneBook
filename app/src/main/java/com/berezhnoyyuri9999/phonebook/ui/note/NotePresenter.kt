@@ -44,7 +44,7 @@ class NotePresenter : NoteContract.NotePresenter {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-//                view?.saveChangedContact()
+
                 view?.onBackToListContact()
                 showToast("Контакт изменен")
 

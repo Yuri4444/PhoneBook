@@ -7,17 +7,17 @@ interface NoteContract {
 
     interface NoteView {
         fun onBackToListContact()
-//        fun saveChangedContact()
+
     }
 
     interface NotePresenter {
 
-        fun bindView(view : NoteView)
+        fun bindView(view: NoteView)
         fun unBindView()
 
-        fun delete(note : AppNote)
+        fun delete(note: AppNote)
 
-        fun update(note : AppNote)
+        fun update(note: AppNote)
 
 
     }
