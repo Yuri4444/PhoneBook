@@ -26,8 +26,10 @@ class DatabaseRepository(private val appRoomDao: AppRoomDao) {
         Observable.fromCallable { appRoomDao.getAllNotes() }
 
 
-    fun delete(note: AppNote) {
-        appRoomDao.deleteNote(note)
-    }
+    fun delete(note: AppNote) : Observable<Unit> =
+        Observable.fromCallable { appRoomDao.deleteNote(note) }
+
+
+
 
 }

@@ -5,6 +5,7 @@ import android.util.Log
 import com.berezhnoyyuri9999.phonebook.RoomApplication
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
 import com.berezhnoyyuri9999.phonebook.utils.REPOSITORY
+import com.berezhnoyyuri9999.phonebook.utils.showToast
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -36,6 +37,7 @@ class AddPresenter() : AddContract.AddPresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 view?.onContactCreated()
+                showToast("Добавлен новый контакт")
                 Log.e("L", "$it")
             }, {
                 Log.e("sda", "${it.message}")

@@ -10,4 +10,8 @@
     <string name="toast_enter_phote_number">Введите номер телефона</string>
     <string name="enter_all_editText">Заполните каждое поле</string>
     <string name="label_name">Телефонная книга</string>
+    <string name="change_contact_title">Изменить контакт</string>
+    <string name="new_contact_title">Новый контакт</string>
+    <string name="main_title">Телефонная книга</string>
+    <string name="tvDelete">Удалить</string>
 </resources>

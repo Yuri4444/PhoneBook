@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.berezhnoyyuri9999.phonebook.R
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
+import com.berezhnoyyuri9999.phonebook.ui.contactList.ContactListFragment
+import com.berezhnoyyuri9999.phonebook.utils.showToast
 
 class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
@@ -35,5 +37,21 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
         mListNotes = list
         notifyDataSetChanged()
     }
+
+
+    //Методы нажатия на item
+    override fun onViewAttachedToWindow(holder: ViewHolder) {
+        holder.itemView.setOnClickListener {
+            ContactListFragment.clickItem(mListNotes[holder.adapterPosition])
+        }
+
+    }
+
+    override fun onViewDetachedFromWindow(holder: ViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        holder.itemView.setOnClickListener(null)
+    }
+
+
 
 }

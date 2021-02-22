@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.berezhnoyyuri9999.phonebook.R
 import com.berezhnoyyuri9999.phonebook.adapter.ItemAdapter
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
+import com.berezhnoyyuri9999.phonebook.utils.APP_ACTIVITY
 import kotlinx.android.synthetic.main.fragment_contact_list.*
 
 
@@ -64,6 +65,15 @@ class ContactListFragment : Fragment(), ContactListContract.ItemView {
     override fun onStop() {
         super.onStop()
         mPresenter.unBind()
+    }
+
+
+    companion object {
+        fun clickItem(note : AppNote) {
+            val bundle = Bundle()
+            bundle.putSerializable("note", note)
+            APP_ACTIVITY.navController.navigate(R.id.action_listFragment_to_noteFragment, bundle)
+        }
     }
 
 }
