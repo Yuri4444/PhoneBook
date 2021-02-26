@@ -1,24 +1,37 @@
 package com.berezhnoyyuri9999.phonebook.ui.contactList
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.berezhnoyyuri9999.phonebook.BookApplication
+import com.berezhnoyyuri9999.phonebook.CommunicatorAdapter
+import com.berezhnoyyuri9999.phonebook.ContactNavController
 import com.berezhnoyyuri9999.phonebook.R
 import com.berezhnoyyuri9999.phonebook.adapter.ItemAdapter
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
-import com.berezhnoyyuri9999.phonebook.utils.APP_ACTIVITY
+
 import kotlinx.android.synthetic.main.fragment_contact_list.*
 
 
-class ContactListFragment : Fragment(), ContactListContract.ItemView {
+class ContactListFragment : Fragment(), ContactListContract.ItemView, CommunicatorAdapter {
+
+
 
     private val mPresenter by lazy {
-        ContactListPresenter()
+        ContactListPresenter(BookApplication.getApp(context))
     }
 
-    private lateinit var mAdapter : ItemAdapter
+    private lateinit var contactNavController: ContactNavController
+
+    private lateinit var mAdapter: ItemAdapter
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        contactNavController = context as ContactNavController
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,15 +44,10 @@ class ContactListFragment : Fragment(), ContactListContract.ItemView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        mPresenter.fetchListItemAdapter()
-
         btnAddNote.setOnClickListener {
-            mPresenter.clickAddNewNote()
+            clickAddNewNote()
         }
 
-        btnBackToStart.setOnClickListener {
-            mPresenter.clickBackToStart()
-        }
 
     }
 
@@ -55,11 +63,14 @@ class ContactListFragment : Fragment(), ContactListContract.ItemView {
         val listRevers = list.asReversed()
 
         mAdapter.setData(listRevers)
+
     }
 
     override fun onStart() {
         super.onStart()
+
         mPresenter.bindView(this)
+
     }
 
     override fun onStop() {
@@ -67,15 +78,16 @@ class ContactListFragment : Fragment(), ContactListContract.ItemView {
         mPresenter.unBind()
     }
 
+    private fun clickAddNewNote() {
+        contactNavController.navController().navigate(R.id.action_listFragment_to_addPersonFragment)
+    }
 
-    companion object {
-        fun clickItem(note : AppNote) {
-            val bundle = Bundle()
 
-            bundle.putSerializable("note", note)
+    override fun clickItem(note: AppNote, onSuccess: () -> Unit) {
+        val bundle = Bundle()
+        bundle.putSerializable("note", note)
 
-            APP_ACTIVITY.navController.navigate(R.id.action_listFragment_to_noteFragment, bundle)
-        }
+        contactNavController.navController().navigate(R.id.action_listFragment_to_noteFragment, bundle)
     }
 
 }

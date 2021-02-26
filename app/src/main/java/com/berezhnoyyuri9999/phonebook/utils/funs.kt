@@ -1,7 +1,11 @@
 package com.berezhnoyyuri9999.phonebook.utils
 
+import android.content.Context
 import android.widget.Toast
+import com.berezhnoyyuri9999.phonebook.MainActivity
 
-fun showToast(message : String) {
-    Toast.makeText(APP_ACTIVITY, message, Toast.LENGTH_SHORT).show()
+fun Context.showToast(message : String) {
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
+
+var APP_ACTIVITY = MainActivity()

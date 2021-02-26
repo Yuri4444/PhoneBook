@@ -6,14 +6,12 @@ interface ContactListContract {
 
     interface ItemView {
         fun showListPersons(list : List<AppNote>)
+
     }
 
     interface ItemPresenter {
 
-        fun fetchListItemAdapter()
 
-        fun clickAddNewNote()
-        fun clickBackToStart()
         fun bindView(view : ItemView)
         fun unBind()
 

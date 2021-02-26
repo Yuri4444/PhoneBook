@@ -1,30 +1,21 @@
 package com.berezhnoyyuri9999.phonebook.ui.contactList
 
 import android.annotation.SuppressLint
+import android.os.Bundle
+import com.berezhnoyyuri9999.phonebook.App
 import com.berezhnoyyuri9999.phonebook.R
-import com.berezhnoyyuri9999.phonebook.utils.APP_ACTIVITY
-import com.berezhnoyyuri9999.phonebook.utils.REPOSITORY
+import com.berezhnoyyuri9999.phonebook.data.models.AppNote
+import com.berezhnoyyuri9999.phonebook.domain.Interactor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class ContactListPresenter : ContactListContract.ItemPresenter {
+class ContactListPresenter(var app: App) : ContactListContract.ItemPresenter {
 
-
+    private val interactor by lazy {
+        Interactor(app)
+    }
 
     private var view : ContactListContract.ItemView? = null
-
-
-    override fun fetchListItemAdapter() {
-
-    }
-
-    override fun clickAddNewNote() {
-        APP_ACTIVITY.navController.navigate(R.id.action_listFragment_to_addPersonFragment)
-    }
-
-    override fun clickBackToStart() {
-        APP_ACTIVITY.navController.navigate(R.id.action_listFragment_to_startFragment)
-    }
 
     override fun bindView(view: ContactListContract.ItemView) {
         this.view = view
@@ -36,8 +27,7 @@ class ContactListPresenter : ContactListContract.ItemPresenter {
 
     @SuppressLint("CheckResult")
     override fun showContactList()  {
-        REPOSITORY.selectAllContacts()
-            .subscribeOn(Schedulers.io())
+        interactor.selectAllContacts()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 view?.showListPersons(it)

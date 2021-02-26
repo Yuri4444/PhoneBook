@@ -1,17 +1,21 @@
 package com.berezhnoyyuri9999.phonebook.ui.note
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
+import com.berezhnoyyuri9999.phonebook.App
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
-import com.berezhnoyyuri9999.phonebook.utils.REPOSITORY
-import com.berezhnoyyuri9999.phonebook.utils.showToast
+import com.berezhnoyyuri9999.phonebook.domain.Interactor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class NotePresenter : NoteContract.NotePresenter {
+class NotePresenter(var app: App) : NoteContract.NotePresenter {
+
+    private val interactor by lazy {
+        Interactor(app)
+    }
 
     private var view: NoteContract.NoteView? = null
-
 
     override fun bindView(view: NoteContract.NoteView) {
         this.view = view
@@ -21,10 +25,9 @@ class NotePresenter : NoteContract.NotePresenter {
         this.view = null
     }
 
-
     @SuppressLint("CheckResult")
     override fun delete(note: AppNote) {
-        REPOSITORY.delete(note)
+        interactor.delete(note)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -32,7 +35,7 @@ class NotePresenter : NoteContract.NotePresenter {
                 view?.onBackToListContact()
 
                 Log.e("Delete", "$it")
-                showToast("Контакт удален")
+//                showToast("Контакт удален")
             }, {
 
             })
@@ -40,18 +43,17 @@ class NotePresenter : NoteContract.NotePresenter {
 
     @SuppressLint("CheckResult")
     override fun update(note: AppNote) {
-        REPOSITORY.update(note)
+        interactor.update(note)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
 
                 view?.onBackToListContact()
-                showToast("Контакт изменен")
+//                showToast("Контакт изменен")
 
             }, {
 
             })
     }
-
 
 }

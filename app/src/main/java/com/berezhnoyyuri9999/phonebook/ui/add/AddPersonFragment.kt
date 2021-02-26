@@ -1,21 +1,30 @@
 package com.berezhnoyyuri9999.phonebook.ui.add
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.berezhnoyyuri9999.phonebook.BookApplication
+import com.berezhnoyyuri9999.phonebook.ContactNavController
+import com.berezhnoyyuri9999.phonebook.MainActivity
 import com.berezhnoyyuri9999.phonebook.R
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
-import com.berezhnoyyuri9999.phonebook.utils.APP_ACTIVITY
-import com.berezhnoyyuri9999.phonebook.utils.showToast
 import kotlinx.android.synthetic.main.fragment_add_person.*
 
 class AddPersonFragment : Fragment(), AddContract.AddView {
 
+    private lateinit var contactNavController : ContactNavController
+
     private val mPresenter by lazy {
-        AddPresenter()
+        AddPresenter(BookApplication.getApp(context))
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        contactNavController = context as ContactNavController
     }
 
     override fun onCreateView(
@@ -51,7 +60,7 @@ class AddPersonFragment : Fragment(), AddContract.AddView {
         val surname = ed_surname.text.toString()
         val phoneNumber = ed_phone_number.text.toString()
         if(name.isEmpty() || surname.isEmpty() || phoneNumber.isEmpty()) {
-            showToast("Заполните все поля")
+//            showToast("Заполните все поля")
         } else {
             mPresenter.insertToDb(AppNote(name = name, surname = surname, number = phoneNumber))
 
@@ -60,7 +69,7 @@ class AddPersonFragment : Fragment(), AddContract.AddView {
     }
 
     override fun onContactCreated() {
-        APP_ACTIVITY.navController.navigate(R.id.action_addPersonFragment_to_listFragment)
+        contactNavController.navController().navigate(R.id.action_addPersonFragment_to_listFragment)
     }
 
 }

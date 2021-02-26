@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">PhoneBook</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="name">Имя</string>
     <string name="surname">Фамилия</string>
     <string name="phone_number">Телефонный номер</string>
@@ -14,4 +12,5 @@
     <string name="new_contact_title">Новый контакт</string>
     <string name="main_title">Телефонная книга</string>
     <string name="tvDelete">Удалить</string>
+    <string name="enter_all_filds">Заполните все поля</string>
 </resources>

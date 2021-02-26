@@ -1,26 +1,38 @@
 package com.berezhnoyyuri9999.phonebook.ui.note
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import com.berezhnoyyuri9999.phonebook.BookApplication
+import com.berezhnoyyuri9999.phonebook.ContactNavController
 import com.berezhnoyyuri9999.phonebook.R
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
-import com.berezhnoyyuri9999.phonebook.utils.APP_ACTIVITY
+import com.berezhnoyyuri9999.phonebook.utils.showToast
 import kotlinx.android.synthetic.main.fragment_note.*
 
 class NoteFragment : Fragment(), NoteContract.NoteView {
 
     private val mPresenter by lazy {
-        NotePresenter()
+        NotePresenter(BookApplication.getApp(context))
     }
 
+    private lateinit var contactNavController : ContactNavController
+
     private lateinit var mCurrentNote : AppNote
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        contactNavController = context as ContactNavController
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_note, container, false)
+
+
         mCurrentNote = arguments?.getSerializable("note") as AppNote
 
         return view
@@ -70,16 +82,22 @@ class NoteFragment : Fragment(), NoteContract.NoteView {
     }
 
     private fun changeData() {
+
         mCurrentNote.name = ed_name_change.text.toString()
         mCurrentNote.surname = ed_surname_change.text.toString()
         mCurrentNote.number = ed_phone_number_change.text.toString()
 
-        mPresenter.update(mCurrentNote)
+        if(mCurrentNote.name.isEmpty() || mCurrentNote.surname.isEmpty() || mCurrentNote.number.isEmpty()) {
+            context?.showToast(getString(R.string.enter_all_filds))
+        } else {
+            mPresenter.update(mCurrentNote)
+        }
+
     }
 
     override fun onBackToListContact() {
 
-        APP_ACTIVITY.navController.navigate(R.id.action_noteFragment_to_listFragment)
+        contactNavController.navController().navigate(R.id.action_noteFragment_to_listFragment)
 
     }
 
