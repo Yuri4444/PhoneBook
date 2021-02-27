@@ -1,7 +1,6 @@
-package com.berezhnoyyuri9999.phonebook.ui.note
+package com.berezhnoyyuri9999.phonebook.ui.edit
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.util.Log
 import com.berezhnoyyuri9999.phonebook.App
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
@@ -9,15 +8,16 @@ import com.berezhnoyyuri9999.phonebook.domain.Interactor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class NotePresenter(var app: App) : NoteContract.NotePresenter {
+class EditPersonPresenter(var app: App) :
+    EditPersonContract.EditPersonPresenter {
 
     private val interactor by lazy {
         Interactor(app)
     }
 
-    private var view: NoteContract.NoteView? = null
+    private var view: EditPersonContract.EditPersonView? = null
 
-    override fun bindView(view: NoteContract.NoteView) {
+    override fun bindView(view: EditPersonContract.EditPersonView) {
         this.view = view
     }
 

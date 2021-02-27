@@ -1,4 +1,4 @@
-package com.berezhnoyyuri9999.phonebook.ui.note
+package com.berezhnoyyuri9999.phonebook.ui.edit
 
 import android.content.Context
 import android.os.Bundle
@@ -11,10 +11,10 @@ import com.berezhnoyyuri9999.phonebook.data.models.AppNote
 import com.berezhnoyyuri9999.phonebook.utils.showToast
 import kotlinx.android.synthetic.main.fragment_note.*
 
-class NoteFragment : Fragment(), NoteContract.NoteView {
+class EditPersonFragment : Fragment(), EditPersonContract.EditPersonView {
 
     private val mPresenter by lazy {
-        NotePresenter(BookApplication.getApp(context))
+        EditPersonPresenter(BookApplication.getApp(context))
     }
 
     private lateinit var contactNavController : ContactNavController

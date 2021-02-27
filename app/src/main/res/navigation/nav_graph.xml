@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/noteFragment"
-        android:name="com.berezhnoyyuri9999.phonebook.ui.note.NoteFragment"
+        android:name="com.berezhnoyyuri9999.phonebook.ui.edit.EditPersonFragment"
         android:label="fragment_note"
         tools:layout="@layout/fragment_note" >
         <action
