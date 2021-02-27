@@ -9,11 +9,8 @@ interface AddContract {
     }
 
     interface AddPresenter {
-
-        fun bindView(view : AddView)
+        fun bindView(view: AddView)
         fun unBind()
-
-
-        fun insertToDb(note : AppNote)
+        fun insertToDb(note: AppNote)
     }
 }

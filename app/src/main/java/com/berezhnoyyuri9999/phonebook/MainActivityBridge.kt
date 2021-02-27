@@ -2,7 +2,7 @@ package com.berezhnoyyuri9999.phonebook
 
 import androidx.navigation.NavController
 
-interface ContactNavController {
+interface MainActivityBridge {
 
         fun navController() : NavController
 

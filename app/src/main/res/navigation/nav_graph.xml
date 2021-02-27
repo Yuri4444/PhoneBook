@@ -14,8 +14,8 @@
             android:id="@+id/action_listFragment_to_addPersonFragment"
             app:destination="@id/addPersonFragment" />
         <action
-            android:id="@+id/action_listFragment_to_noteFragment"
-            app:destination="@id/noteFragment" />
+            android:id="@+id/action_listFragment_to_editPersonFragment"
+            app:destination="@id/editPersonFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPersonFragment"
@@ -29,7 +29,7 @@
             app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
-        android:id="@+id/noteFragment"
+        android:id="@+id/editPersonFragment"
         android:name="com.berezhnoyyuri9999.phonebook.ui.edit.EditPersonFragment"
         android:label="fragment_note"
         tools:layout="@layout/fragment_note" >

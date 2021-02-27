@@ -28,14 +28,10 @@ class EditPersonPresenter(var app: App) :
     @SuppressLint("CheckResult")
     override fun delete(note: AppNote) {
         interactor.delete(note)
-            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-
                 view?.onBackToListContact()
-
                 Log.e("Delete", "$it")
-//                showToast("Контакт удален")
             }, {
 
             })
@@ -44,16 +40,10 @@ class EditPersonPresenter(var app: App) :
     @SuppressLint("CheckResult")
     override fun update(note: AppNote) {
         interactor.update(note)
-            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-
                 view?.onBackToListContact()
-//                showToast("Контакт изменен")
-
             }, {
-
             })
     }
-
 }

@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.berezhnoyyuri9999.phonebook.R
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
 
-class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
+class ItemAdapter(var clickListener: (Int, AppNote) -> Unit) :
+    RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
     private var mListNotes: List<AppNote> = ArrayList()
 
@@ -24,7 +25,6 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
         return ViewHolder(view)
     }
 
-
     override fun getItemCount() = mListNotes.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -35,7 +35,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
         holder.numberNote.text = positionList.number
 
         holder.itemView.setOnClickListener {
-            clickItem(mListNotes[holder.adapterPosition])
+            clickListener.invoke(holder.adapterPosition, mListNotes[holder.adapterPosition])
         }
 
     }
