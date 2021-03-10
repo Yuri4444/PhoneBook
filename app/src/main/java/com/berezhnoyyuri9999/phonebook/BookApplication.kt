@@ -1,28 +1,15 @@
 package com.berezhnoyyuri9999.phonebook
 
 import android.app.Application
-import android.content.Context
-import com.berezhnoyyuri9999.phonebook.data.repository.DatabaseRepository
-import com.berezhnoyyuri9999.phonebook.data.repository.room.AppRoomDao
-import com.berezhnoyyuri9999.phonebook.data.repository.room.AppRoomDatabase
+import com.berezhnoyyuri9999.phonebook.data.room.AppRoomDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 
-class BookApplication : Application(), App {
+class BookApplication : Application() {
 
-    lateinit var databaseRepository : DatabaseRepository
+    val applicationScope = CoroutineScope(SupervisorJob())
 
-    override fun onCreate() {
-        super.onCreate()
+    val database by lazy { AppRoomDatabase.getDatabase(this) }
+    val repository by lazy { DatabaseRepository(database.getAppRoomDao()) }
 
-        val dao = AppRoomDatabase.getInstance(this).getAppRoomDao()
-        databaseRepository = DatabaseRepository(dao)
-
-    }
-
-    override fun getRepository(): DatabaseRepository = databaseRepository
-
-    companion object {
-        fun getApp(context: Context?) : App {
-            return context?.applicationContext as App
-        }
-    }
 }
