@@ -1,15 +1,11 @@
 package com.berezhnoyyuri9999.phonebook.ui.contactList
 
 import android.annotation.SuppressLint
+import android.util.Log
 import com.berezhnoyyuri9999.phonebook.App
-import com.berezhnoyyuri9999.phonebook.data.models.AppNote
 import com.berezhnoyyuri9999.phonebook.domain.Interactor
-import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class ContactListPresenter(var app: App) : ContactListContract.ItemPresenter {
 
@@ -41,28 +37,23 @@ class ContactListPresenter(var app: App) : ContactListContract.ItemPresenter {
 
     @SuppressLint("CheckResult")
     override fun showContactList() {
-        interactor.selectAllContactsRx()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                view?.showListPersons(it)
-            }, {
-
-            })
-
-        runBlocking {
-            var result: List<AppNote>? = null
-            async { result = interactor.selectAllContacts() }
-            result?.let {
-                view?.showListPersons(it)
-            }
-
-        }
-
-//        CoroutineScope(Main).launch {
+//        interactor.selectAllContactsRx()
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe({
+//                view?.showListPersons(it)
+//            }, {
 //
-//            val result = interactor.selectAllContacts()
-//            view?.showListPersons(it)
-//        }
+//            })
+//
+        CoroutineScope(Main).ioToUi(
+            io = {
+                val result = interactor.selectAllContacts()
+                Log.e("result", result.toString())
+                result
+            },
+            ui = { view?.showListPersons(it) }
+        )
+
     }
 
 
@@ -102,3 +93,22 @@ class ContactListPresenter(var app: App) : ContactListContract.ItemPresenter {
 //
 //        })
 //}
+
+fun <T> CoroutineScope.ioToUi(
+    io: suspend () -> T,
+    ui: (T) -> Unit,
+    exception: ((Exception) -> Unit)? = null
+): Job {
+    return launch(Dispatchers.IO) {
+        try {
+            val result = io()
+            withContext(Main) {
+                ui(result)
+            }
+        } catch (e: Exception) {
+            withContext(Main) {
+                exception?.invoke(e)
+            }
+        }
+    }
+}
