@@ -7,6 +7,9 @@ import com.berezhnoyyuri9999.phonebook.data.models.AppNote
 import com.berezhnoyyuri9999.phonebook.domain.Interactor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
 
 class EditPersonPresenter(var app: App) :
     EditPersonContract.EditPersonPresenter {
@@ -25,25 +28,41 @@ class EditPersonPresenter(var app: App) :
         this.view = null
     }
 
-    @SuppressLint("CheckResult")
     override fun delete(note: AppNote) {
-        interactor.delete(note)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                view?.onBackToListContact()
-                Log.e("Delete", "$it")
-            }, {
-
-            })
+        CoroutineScope(Main).launch {
+            interactor.delete(note)
+            view?.onBackToListContact()
+        }
     }
 
-    @SuppressLint("CheckResult")
     override fun update(note: AppNote) {
-        interactor.update(note)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                view?.onBackToListContact()
-            }, {
-            })
+        CoroutineScope(Main).launch {
+            interactor.update(note)
+            view?.onBackToListContact()
+        }
     }
+
 }
+
+
+//@SuppressLint("CheckResult")
+//override fun delete(note: AppNote) {
+//    interactor.delete(note)
+//        .observeOn(AndroidSchedulers.mainThread())
+//        .subscribe({
+//            view?.onBackToListContact()
+//            Log.e("Delete", "$it")
+//        }, {
+//
+//        })
+//}
+//
+//@SuppressLint("CheckResult")
+//override fun update(note: AppNote) {
+//    interactor.update(note)
+//        .observeOn(AndroidSchedulers.mainThread())
+//        .subscribe({
+//            view?.onBackToListContact()
+//        }, {
+//        })
+//}

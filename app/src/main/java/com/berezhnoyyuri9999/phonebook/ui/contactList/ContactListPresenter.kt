@@ -8,6 +8,9 @@ import com.berezhnoyyuri9999.phonebook.data.models.AppNote
 import com.berezhnoyyuri9999.phonebook.domain.Interactor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
 
 class ContactListPresenter(var app: App) : ContactListContract.ItemPresenter {
 
@@ -15,7 +18,7 @@ class ContactListPresenter(var app: App) : ContactListContract.ItemPresenter {
         Interactor(app)
     }
 
-    private var view : ContactListContract.ItemView? = null
+    private var view: ContactListContract.ItemView? = null
 
     override fun bindView(view: ContactListContract.ItemView) {
         this.view = view
@@ -25,8 +28,9 @@ class ContactListPresenter(var app: App) : ContactListContract.ItemPresenter {
         this.view = null
     }
 
+
     @SuppressLint("CheckResult")
-    override fun showContactList()  {
+    override fun showContactList() {
         interactor.selectAllContacts()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -35,4 +39,7 @@ class ContactListPresenter(var app: App) : ContactListContract.ItemPresenter {
 
             })
     }
+
 }
+
+
