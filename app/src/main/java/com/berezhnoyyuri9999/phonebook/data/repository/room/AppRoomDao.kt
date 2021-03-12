@@ -1,9 +1,7 @@
 package com.berezhnoyyuri9999.phonebook.data.repository.room
 
-
 import androidx.room.*
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
-
 
 @Dao
 interface AppRoomDao {
@@ -20,5 +18,3 @@ interface AppRoomDao {
     @Update
     fun updateNote(note: AppNote)
 }
-
-
