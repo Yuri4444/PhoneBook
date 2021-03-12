@@ -34,6 +34,8 @@ class AddPresenter(var app: App) : AddContract.AddPresenter {
             view?.onContactCreated()
         }
 
+
+
     }
 }
 

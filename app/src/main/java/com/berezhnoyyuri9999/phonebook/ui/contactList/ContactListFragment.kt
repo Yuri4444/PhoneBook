@@ -6,12 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.berezhnoyyuri9999.phonebook.BookApplication
 import com.berezhnoyyuri9999.phonebook.MainActivityBridge
 import com.berezhnoyyuri9999.phonebook.R
 import com.berezhnoyyuri9999.phonebook.adapter.ItemAdapter
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
 import kotlinx.android.synthetic.main.fragment_contact_list.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
 
 
 class ContactListFragment : Fragment(), ContactListContract.ItemView {
@@ -19,6 +22,8 @@ class ContactListFragment : Fragment(), ContactListContract.ItemView {
     private val mPresenter by lazy {
         ContactListPresenter(BookApplication.getApp(context))
     }
+
+//    private lateinit var viewModel : ContactListViewModel
 
     private lateinit var mainActivityBridge: MainActivityBridge
 
@@ -39,6 +44,9 @@ class ContactListFragment : Fragment(), ContactListContract.ItemView {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+//        viewModel = ViewModelProvider(this).get(ContactListViewModel::class.java)
+
+
         return inflater.inflate(R.layout.fragment_contact_list, container, false)
     }
 
@@ -53,6 +61,7 @@ class ContactListFragment : Fragment(), ContactListContract.ItemView {
         super.onViewCreated(view, savedInstanceState)
         recyclerView.adapter = mAdapter
         mPresenter.showContactList()
+
     }
 
     override fun showListPersons(list: List<AppNote>) {

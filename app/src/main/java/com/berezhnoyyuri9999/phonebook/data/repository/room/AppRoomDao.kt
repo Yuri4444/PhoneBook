@@ -9,8 +9,18 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AppRoomDao {
 
+//    @Query("SELECT * FROM notes_tables")
+//    fun getAllNotes(): LiveData<List<AppNote>>
+
+
+//    @Query("SELECT * FROM notes_tables")
+//    suspend fun getAllNotes(): List<AppNote>
+
     @Query("SELECT * FROM notes_tables")
     fun getAllNotes(): List<AppNote>
+
+//    @Query("SELECT * FROM notes_tables")
+//    suspend fun getAllNotes(): Deferred<List<AppNote>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertNote(note: AppNote)
