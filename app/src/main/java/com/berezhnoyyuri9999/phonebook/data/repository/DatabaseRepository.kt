@@ -1,10 +1,8 @@
 package com.berezhnoyyuri9999.phonebook.data.repository
 
-import androidx.lifecycle.LiveData
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
 import com.berezhnoyyuri9999.phonebook.data.repository.room.AppRoomDao
 import io.reactivex.Observable
-import kotlinx.coroutines.Deferred
 
 
 class DatabaseRepository(private val appRoomDao: AppRoomDao) {
@@ -16,10 +14,12 @@ class DatabaseRepository(private val appRoomDao: AppRoomDao) {
 
     //   2)
     fun selectAllContacts(): Observable<List<AppNote>> =
-        Observable.fromCallable { appRoomDao.getAllNotes() }
+        Observable.fromCallable { appRoomDao.getAllNotesSync() }
 
 
-//    val allNotes : List<AppNote> = appRoomDao.getAllNotes()
+    suspend fun selectAllNotes(): List<AppNote> {
+        return appRoomDao.getAllNotes()
+    }
 
     suspend fun insert(note: AppNote) {
         appRoomDao.insertNote(note)

@@ -1,19 +1,15 @@
 package com.berezhnoyyuri9999.phonebook.ui.contactList
 
 import android.annotation.SuppressLint
-import android.os.Bundle
 import com.berezhnoyyuri9999.phonebook.App
-import com.berezhnoyyuri9999.phonebook.R
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
 import com.berezhnoyyuri9999.phonebook.domain.Interactor
-import com.berezhnoyyuri9999.phonebook.utils.ioToUi
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.runBlocking
 
 class ContactListPresenter(var app: App) : ContactListContract.ItemPresenter {
 
@@ -45,13 +41,28 @@ class ContactListPresenter(var app: App) : ContactListContract.ItemPresenter {
 
     @SuppressLint("CheckResult")
     override fun showContactList() {
-        interactor.selectAllContacts()
+        interactor.selectAllContactsRx()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 view?.showListPersons(it)
             }, {
 
             })
+
+        runBlocking {
+            var result: List<AppNote>? = null
+            async { result = interactor.selectAllContacts() }
+            result?.let {
+                view?.showListPersons(it)
+            }
+
+        }
+
+//        CoroutineScope(Main).launch {
+//
+//            val result = interactor.selectAllContacts()
+//            view?.showListPersons(it)
+//        }
     }
 
 

@@ -13,11 +13,11 @@ interface AppRoomDao {
 //    fun getAllNotes(): LiveData<List<AppNote>>
 
 
-//    @Query("SELECT * FROM notes_tables")
-//    suspend fun getAllNotes(): List<AppNote>
+    @Query("SELECT * FROM notes_tables")
+    suspend fun getAllNotes(): List<AppNote>
 
     @Query("SELECT * FROM notes_tables")
-    fun getAllNotes(): List<AppNote>
+    fun getAllNotesSync(): List<AppNote>
 
 //    @Query("SELECT * FROM notes_tables")
 //    suspend fun getAllNotes(): Deferred<List<AppNote>>

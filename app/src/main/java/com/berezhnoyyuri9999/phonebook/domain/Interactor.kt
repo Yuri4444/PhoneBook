@@ -4,10 +4,9 @@ import com.berezhnoyyuri9999.phonebook.App
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
-import java.lang.Exception
+import kotlinx.coroutines.launch
 
 class Interactor(private val app: App) {
 
@@ -32,15 +31,12 @@ class Interactor(private val app: App) {
 //    }
 
 
-    fun selectAllContacts(): Observable<List<AppNote>> {
+    fun selectAllContactsRx(): Observable<List<AppNote>> {
         return room.selectAllContacts()
             .subscribeOn(Schedulers.io())
     }
 
-//    fun selectAllContacts() = CoroutineScope(IO).launch  {
-//         room.selectAllContacts()
-//    }
-
+    suspend fun selectAllContacts() = room.selectAllNotes()
 }
 
 
