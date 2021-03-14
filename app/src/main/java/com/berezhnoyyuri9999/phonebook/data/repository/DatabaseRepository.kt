@@ -2,20 +2,8 @@ package com.berezhnoyyuri9999.phonebook.data.repository
 
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
 import com.berezhnoyyuri9999.phonebook.data.repository.room.AppRoomDao
-import io.reactivex.Observable
-
 
 class DatabaseRepository(private val appRoomDao: AppRoomDao) {
-
-//   1)
-//   suspend fun selectAllContacts() : List<AppNote> {
-//        return appRoomDao.getAllNotes()
-//    }
-
-    //   2)
-    fun selectAllContacts(): Observable<List<AppNote>> =
-        Observable.fromCallable { appRoomDao.getAllNotesSync() }
-
 
     suspend fun selectAllNotes(): List<AppNote> {
         return appRoomDao.getAllNotes()
@@ -34,20 +22,3 @@ class DatabaseRepository(private val appRoomDao: AppRoomDao) {
     }
 
 }
-
-
-//fun selectAllContacts(): Observable<List<AppNote>> =
-//    Observable.fromCallable { appRoomDao.getAllNotes() }
-//
-
-//fun insert(note: AppNote): Observable<Long> =
-//    Observable.fromCallable { appRoomDao.insertNote(note) }
-//
-
-//
-//
-//fun delete(note: AppNote): Observable<Unit> =
-//    Observable.fromCallable { appRoomDao.deleteNote(note) }
-//
-//fun update(note: AppNote): Observable<Unit> =
-//    Observable.fromCallable { appRoomDao.updateNote(note) }

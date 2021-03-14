@@ -11,11 +11,12 @@ import com.berezhnoyyuri9999.phonebook.BookApplication
 import com.berezhnoyyuri9999.phonebook.MainActivityBridge
 import com.berezhnoyyuri9999.phonebook.R
 import com.berezhnoyyuri9999.phonebook.data.models.AppNote
+import com.berezhnoyyuri9999.phonebook.utils.showToast
 import kotlinx.android.synthetic.main.fragment_add_person.*
 
 class AddPersonFragment : Fragment(), AddContract.AddView {
 
-    private lateinit var contactNavController : MainActivityBridge
+    private lateinit var contactNavController: MainActivityBridge
 
     private val mPresenter by lazy {
         AddPresenter(BookApplication.getApp(context))
@@ -37,7 +38,6 @@ class AddPersonFragment : Fragment(), AddContract.AddView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         btn_ok.setOnClickListener {
-
             initialized()
         }
 
@@ -58,12 +58,10 @@ class AddPersonFragment : Fragment(), AddContract.AddView {
         val name = ed_name.text.toString()
         val surname = ed_surname.text.toString()
         val phoneNumber = ed_phone_number.text.toString()
-        if(name.isEmpty() || surname.isEmpty() || phoneNumber.isEmpty()) {
-//            showToast("Заполните все поля")
+        if (name.isEmpty() || surname.isEmpty() || phoneNumber.isEmpty()) {
+            context?.showToast("Заполните все поля")
         } else {
             mPresenter.insertToDb(AppNote(name = name, surname = surname, number = phoneNumber))
-
-
         }
     }
 

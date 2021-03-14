@@ -1,6 +1,5 @@
 package com.berezhnoyyuri9999.phonebook.adapter
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,11 +37,6 @@ class ItemAdapter(var clickListener: (Int, AppNote) -> Unit) :
             clickListener.invoke(holder.adapterPosition, mListNotes[holder.adapterPosition])
         }
 
-    }
-
-    private fun clickItem(note: AppNote) {
-        val bundle = Bundle()
-        bundle.putSerializable("note", note)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
